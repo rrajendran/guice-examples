@@ -9,4 +9,4 @@ mvn jetty:run
 
 Access Service
 ==============
-http://localhost:9095/hello/john
+http://localhost:8080/guice-resteasy/hello/EmilyJackson
