@@ -9,7 +9,6 @@
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>guice-persistence</module>
-        <module>guice-resteasy</module>
         <module>guice-cxf</module>
     </modules>
     <packaging>pom</packaging>
