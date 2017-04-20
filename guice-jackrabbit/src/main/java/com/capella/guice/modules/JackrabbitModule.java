@@ -21,8 +21,9 @@ public class JackrabbitModule extends AbstractModule {
 
 
     @Provides
-    public RepositoryConfig getRepositoryConfig() throws ConfigurationException {
-        return RepositoryConfig.create(new File(JackrabbitModule.class.getProtectionDomain().getCodeSource().getLocation().getPath()));
+    public RepositoryConfig getRepositoryConfig(@Named("jackrabbit.repo.xml.path") String configurationPath,
+                                                @Named("jackrabbit.datastore.location") String dataStorePath) throws ConfigurationException {
+        return RepositoryConfig.create(new File(configurationPath), new File(dataStorePath));
     }
 
 
