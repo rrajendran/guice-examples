@@ -10,6 +10,7 @@
     <modules>
         <module>guice-persistence</module>
         <module>guice-cxf</module>
+        <module>guice-jackrabbit</module>
     </modules>
     <packaging>pom</packaging>
     <properties>
