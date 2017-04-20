@@ -8,9 +8,11 @@ import org.apache.tika.io.IOUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import javax.jcr.ItemNotFoundException;
 import javax.jcr.RepositoryException;
 import java.io.*;
 import java.net.URL;
+import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -57,6 +59,16 @@ public class JackRabbitOperationsTest {
         IOUtils.contentEquals(fileByIdentifier, JackRabbitOperations.class.getClassLoader().getResourceAsStream("sample.pdf"));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenIdentifierIsNotProvided() throws Exception {
+        jackRabbitOperations.readBinaryFile(null);
+    }
+
+
+    @Test(expected = ItemNotFoundException.class)
+    public void shouldThrowExceptionWhenIdentifierIsNotFound() throws Exception {
+        jackRabbitOperations.readBinaryFile(UUID.randomUUID().toString());
+    }
 
     @Test
     public void testRemoveNodes() throws RepositoryException {

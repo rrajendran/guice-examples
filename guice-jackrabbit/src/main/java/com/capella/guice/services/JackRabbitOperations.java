@@ -6,6 +6,7 @@ import javax.jcr.*;
 import javax.jcr.security.Privilege;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Objects;
 
 import static javax.jcr.Property.JCR_DATA;
 import static javax.jcr.nodetype.NodeType.NT_FILE;
@@ -22,11 +23,6 @@ public class JackRabbitOperations {
     @Inject
     private Session session;
 
-    public JackRabbitOperations() throws RepositoryException {
-
-    }
-
-
     /**
      * Add text to node
      *
@@ -34,6 +30,10 @@ public class JackRabbitOperations {
      * @throws RepositoryException
      */
     public void addText(String path, String message) throws RepositoryException {
+        if (Objects.isNull(path)) {
+            throw new IllegalArgumentException("path is required");
+        }
+
         Node rootNode = session.getRootNode();
         AccessControlModule.modifyNodeAccess(session, rootNode, Privilege.JCR_WRITE);
         // Store content
@@ -55,6 +55,9 @@ public class JackRabbitOperations {
      * @throws RepositoryException
      */
     public String retrieveText(String path) throws RepositoryException {
+        if (Objects.isNull(path)) {
+            throw new IllegalArgumentException("path is required");
+        }
         Node rootNode = session.getRootNode();
         // Retrieve content
         if (rootNode.hasNode(path)) {
@@ -70,15 +73,15 @@ public class JackRabbitOperations {
      * @throws RepositoryException
      */
     public void removeNode(String path) throws RepositoryException {
+        if (Objects.isNull(path)) {
+            throw new IllegalArgumentException("path is required");
+        }
         Node rootNode = session.getRootNode();
         if (rootNode.hasNode(path)) {
             Node node = rootNode.getNode(path);
             node.remove();
             session.save();
         }
-
-        System.out.println("******" + rootNode.hasNode(path));
-
     }
 
     /**
@@ -113,6 +116,9 @@ public class JackRabbitOperations {
      * @throws RepositoryException
      */
     public InputStream readBinaryFile(String identifier) throws RepositoryException {
+        if (Objects.isNull(identifier)) {
+            throw new IllegalArgumentException("Document identifier is required");
+        }
         Node nodeByIdentifier = session.getNodeByIdentifier(identifier);
         Binary binary = nodeByIdentifier.getProperty(JCR_DATA).getBinary();
         return binary.getStream();
@@ -127,6 +133,9 @@ public class JackRabbitOperations {
      * @throws RepositoryException
      */
     public Boolean hasNode(String nodePath) throws RepositoryException {
+        if (Objects.isNull(nodePath)) {
+            throw new IllegalArgumentException("nodePath is required");
+        }
         return session.getRootNode().hasNode(nodePath);
     }
 }
