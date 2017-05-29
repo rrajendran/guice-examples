@@ -1,0 +1,33 @@
+[
+  {
+    "parentNodeType": "{http://www.jcp.org/jcr/nt/1.0}unstructured",
+    "nodeType": "nt:hoFile",
+    "queryable": true,
+    "attributes": [
+      {
+        "name": "jcr:sourceSystem",
+        "dataType": "String"
+      },
+      {
+        "name": "jcr:serviceDeliveryId",
+        "dataType": "String"
+      },
+      {
+        "name": "jcr:debugCorrelationId",
+        "dataType": "String"
+      },
+      {
+        "name": "jcr:documentType",
+        "dataType": "String"
+      },
+      {
+        "name": "jcr:documentName",
+        "dataType": "String"
+      },
+      {
+        "name": "jcr:sourceUniqueReference",
+        "dataType": "String"
+      }
+    ]
+  }
+]
