@@ -2,6 +2,7 @@ package com.capella.guice.services;
 
 import com.capella.guice.domain.OakContentStream;
 import com.capella.guice.domain.OakDocument;
+import com.capella.guice.exceptions.DocumentManagementException;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -39,7 +40,6 @@ public class OakFileRepository {
      * @throws FileNotFoundException
      */
     public String writeBinaryFile(String path, InputStream inputStream, String documentName, String mimeType) throws RepositoryException {
-
         Node folder;
         Node rootNode = session.getRootNode();
         if (!rootNode.hasNode(path)) {
@@ -47,19 +47,29 @@ public class OakFileRepository {
         } else {
             folder = rootNode.getNode(path);
         }
+        Node nodeFile;
+        if (!folder.hasNode(documentName)) {
+            nodeFile = folder.addNode(documentName, NT_FILE);
+        } else {
+            nodeFile = folder.getNode(documentName);
+        }
 
-        Node nodeFile = folder.addNode(documentName, NT_FILE);
         nodeFile.addMixin(NodeType.MIX_CREATED);
         nodeFile.addMixin(NodeType.MIX_LAST_MODIFIED);
         nodeFile.addMixin(NodeType.MIX_TITLE);
 
         Node content = nodeFile.addNode(Property.JCR_CONTENT, "nt:hoFile");
+
+
+
         content.setProperty(Property.JCR_MIMETYPE, mimeType);
         String currentDatTime = LocalDateTime.now().toString();
         //content.setProperty(Property.JCR_CREATED, currentDatTime);
         content.setProperty("jcr:serviceDeliveryId", UUID.randomUUID().toString());
         content.setProperty(JCR_CREATED, currentDatTime);
         content.setProperty(JCR_LAST_MODIFIED, currentDatTime);
+        content.setProperty(JCR_NAME, documentName);
+        //content.setProperty(JCR_ID, UUID.randomUUID().toString());
 
 
         Binary binary = session.getValueFactory().createBinary(inputStream);
@@ -74,6 +84,7 @@ public class OakFileRepository {
      *
      * @throws RepositoryException
      */
+
     public OakDocument readBinaryFile(String identifier) throws RepositoryException {
         Node nodeByIdentifier = session.getNodeByIdentifier(identifier);
         Binary binary = nodeByIdentifier.getProperty(JCR_DATA).getBinary();
@@ -103,4 +114,30 @@ public class OakFileRepository {
     }
 
 
+    public void updateProperties(Map<String, String> mappedProperties, String documentId) throws RepositoryException {
+        Node nodeByIdentifier = session.getNodeByIdentifier(documentId);
+
+        mappedProperties.entrySet().stream().forEach((entry) -> {
+            try {
+                nodeByIdentifier.setProperty(entry.getKey(), entry.getValue());
+            } catch (RepositoryException e) {
+                throw new DocumentManagementException("Failed updating node properties", e);
+            }
+        });
+
+        session.save();
+    }
+
+    public void removeNodeByIdentifier(String documentId) throws RepositoryException {
+        Node nodeByIdentifier = session.getNodeByIdentifier(documentId);
+        if (nodeByIdentifier != null) {
+            NodeIterator nodes = nodeByIdentifier.getNodes();
+            while (nodes.hasNext()) {
+                Node node = nodes.nextNode();
+                node.remove();
+            }
+            nodeByIdentifier.remove();
+            session.save();
+        }
+    }
 }

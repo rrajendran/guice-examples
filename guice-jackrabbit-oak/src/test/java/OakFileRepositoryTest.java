@@ -5,12 +5,14 @@ import com.capella.guice.utils.StreamUtils;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.apache.commons.io.FileUtils;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.jcr.RepositoryException;
 import java.io.*;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -23,6 +25,7 @@ import static org.junit.Assert.assertThat;
 
 public class OakFileRepositoryTest {
     private static OakOperations oakOperations;
+    private String identifier;
 
     @BeforeClass
     public static void init() {
@@ -30,27 +33,39 @@ public class OakFileRepositoryTest {
         oakOperations = injector.getInstance(OakOperations.class);
     }
 
-    @Test
+    @Before
     public void testPdfStore() throws IOException, RepositoryException {
         URL url = OakFileRepositoryTest.class.getClassLoader().getResource("sample.pdf");
         File file = FileUtils.toFile(url);
         InputStream stream = new BufferedInputStream(new FileInputStream(file));
         String path = "hello/pdfs";
 
-        String identifier = oakOperations.saveDocument(stream, "sample.pdf", "application/pdf");
-        System.out.println(identifier);
+        identifier = oakOperations.saveDocument(stream, "sample.pdf", "application/pdf");
+        System.out.println("********************" + identifier);
         assertThat(identifier, is(notNullValue()));
+    }
 
-        //InputStream inputStream = jackRabbitOperations.readBinaryFile(path);
 
+    @Test
+    public void shouldVerifyDocumentIsEqual() throws IOException {
         OakDocument fileByIdentifier = oakOperations.getDocumentById(identifier);
-
-
         StreamUtils.contentEquals(fileByIdentifier.getOakContentStream().getInputStream(), OakFileRepositoryTest.class.getClassLoader().getResourceAsStream("sample.pdf"));
+    }
 
 
-        Map<String, String> property = oakOperations.getProperty(identifier);
+    @Test
+    public void shouldUpdateMetadata() throws IOException {
+        Map<String, String> map = new HashMap<>();
+        map.put("serviceDeliveryId", "1001");
+        oakOperations.updateDocumentMetaData(map, identifier);
 
-        property.keySet().stream().forEach(System.out::println);
+        Map<String, String> properties = oakOperations.getProperty(identifier);
+
+        assertThat(properties.get("jcr:serviceDeliveryId"), is("1001"));
+    }
+
+    @Test
+    public void testDeleteDocumentById() {
+        oakOperations.deleteDocumentById(identifier);
     }
 }

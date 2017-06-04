@@ -29,5 +29,5 @@ public interface OakOperations {
     void setProperties(List<Map<String, String>> properties);
 
 
-    Map<String, String> getProperty(String propertyKey);
+    Map<String, String> getProperty(String documentId);
 }

@@ -4,6 +4,7 @@ import com.capella.guice.services.*;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Provides;
+import org.apache.jackrabbit.oak.Oak;
 import org.apache.jackrabbit.oak.jcr.Jcr;
 import org.apache.jackrabbit.oak.segment.SegmentNodeStore;
 import org.apache.jackrabbit.oak.segment.SegmentNodeStoreBuilders;
@@ -33,7 +34,7 @@ public class JackrabbitOakModule implements Module {
             InvalidFileStoreVersionException {
         FileStore fs = FileStoreBuilder.fileStoreBuilder(new File(repoPath)).build();
         SegmentNodeStore ns = SegmentNodeStoreBuilders.builder(fs).build();
-        Repository repo = new Jcr(ns).createRepository();
+        Repository repo = new Jcr(new Oak(ns)).createRepository();
 
         Session session = repo.login(credentials);
 

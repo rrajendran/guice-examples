@@ -2,7 +2,9 @@ package com.capella.guice.services;
 
 import com.capella.guice.domain.OakDocument;
 import com.capella.guice.exceptions.DocumentManagementException;
+import com.capella.guice.mappers.PropertyIdMapper;
 import com.google.inject.Inject;
+import org.slf4j.Logger;
 
 import javax.inject.Named;
 import javax.jcr.RepositoryException;
@@ -10,12 +12,14 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 /**
  * @author Ramesh Rajendran
  */
 
 public class OakOperationsImpl implements OakOperations {
-
+    public static final Logger LOGGER = getLogger(OakOperationsImpl.class);
     @Inject
     private OakFileRepository oakFileRepository;
 
@@ -28,9 +32,8 @@ public class OakOperationsImpl implements OakOperations {
         try {
             return oakFileRepository.readBinaryFile(documentId);
         } catch (Exception ex) {
-            // do something with your exception
+            throw new DocumentManagementException("Fetch document failed -" + documentId, ex);
         }
-        return null;
     }
 
     @Override
@@ -44,6 +47,12 @@ public class OakOperationsImpl implements OakOperations {
 
     @Override
     public void updateDocumentMetaData(Map<String, String> documentMetaData, String documentId) {
+        try {
+            Map<String, String> mappedProperties = PropertyIdMapper.map(documentMetaData);
+            oakFileRepository.updateProperties(mappedProperties, documentId);
+        } catch (Exception ex) {
+            throw new DocumentManagementException("Update of metadata failed:", ex);
+        }
 
     }
 
@@ -54,6 +63,12 @@ public class OakOperationsImpl implements OakOperations {
 
     @Override
     public void deleteDocumentById(String documentId) {
+        LOGGER.info("Deleting document = " + documentId);
+        try {
+            oakFileRepository.removeNodeByIdentifier(documentId);
+        } catch (Exception ex) {
+            throw new DocumentManagementException("Retrieving metadata faile:", ex);
+        }
 
     }
 
@@ -63,9 +78,9 @@ public class OakOperationsImpl implements OakOperations {
     }
 
     @Override
-    public Map<String, String> getProperty(String propertyKey) {
+    public Map<String, String> getProperty(String documentId) {
         try {
-            return oakFileRepository.getProperties(propertyKey);
+            return oakFileRepository.getProperties(documentId);
         } catch (RepositoryException e) {
             e.printStackTrace();
         }
