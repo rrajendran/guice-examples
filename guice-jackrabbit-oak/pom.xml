@@ -26,6 +26,12 @@
                 <artifactId>oak-segment-tar</artifactId>
                 <version>${jackrabbit-oak.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.jackrabbit</groupId>
+                <artifactId>oak-blob-cloud</artifactId>
+                <version>${jackrabbit-oak.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -37,6 +43,10 @@
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>oak-segment-tar</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jackrabbit</groupId>
+            <artifactId>oak-blob-cloud</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>

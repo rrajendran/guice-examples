@@ -5,6 +5,7 @@ import com.capella.guice.utils.StreamUtils;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.apache.commons.io.FileUtils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,8 +16,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -56,16 +56,18 @@ public class OakFileRepositoryTest {
     @Test
     public void shouldUpdateMetadata() throws IOException {
         Map<String, String> map = new HashMap<>();
-        map.put("serviceDeliveryId", "1001");
+        map.put("serviceDeliveryId", "10001");
         oakOperations.updateDocumentMetaData(map, identifier);
 
         Map<String, String> properties = oakOperations.getProperty(identifier);
 
-        assertThat(properties.get("jcr:serviceDeliveryId"), is("1001"));
+        assertThat(properties.get("jcr:serviceDeliveryId"), is("10001"));
     }
 
-    @Test
+    @After
     public void testDeleteDocumentById() {
         oakOperations.deleteDocumentById(identifier);
+        OakDocument documentById = oakOperations.getDocumentById(identifier);
+        assertThat(documentById, is(nullValue()));
     }
 }

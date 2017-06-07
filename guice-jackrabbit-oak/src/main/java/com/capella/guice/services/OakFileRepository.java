@@ -69,12 +69,11 @@ public class OakFileRepository {
         content.setProperty(JCR_CREATED, currentDatTime);
         content.setProperty(JCR_LAST_MODIFIED, currentDatTime);
         content.setProperty(JCR_NAME, documentName);
-        //content.setProperty(JCR_ID, UUID.randomUUID().toString());
+        content.setProperty(JCR_ID, UUID.randomUUID().toString());
 
 
         Binary binary = session.getValueFactory().createBinary(inputStream);
         content.setProperty(Property.JCR_DATA, binary);
-
         return content.getIdentifier();
 
     }
@@ -129,6 +128,7 @@ public class OakFileRepository {
     }
 
     public void removeNodeByIdentifier(String documentId) throws RepositoryException {
+
         Node nodeByIdentifier = session.getNodeByIdentifier(documentId);
         if (nodeByIdentifier != null) {
             NodeIterator nodes = nodeByIdentifier.getNodes();
@@ -137,7 +137,6 @@ public class OakFileRepository {
                 node.remove();
             }
             nodeByIdentifier.remove();
-            session.save();
         }
     }
 }

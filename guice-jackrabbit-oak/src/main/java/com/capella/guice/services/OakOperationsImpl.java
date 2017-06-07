@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import org.slf4j.Logger;
 
 import javax.inject.Named;
+import javax.jcr.ItemNotFoundException;
 import javax.jcr.RepositoryException;
 import java.io.InputStream;
 import java.util.List;
@@ -31,6 +32,9 @@ public class OakOperationsImpl implements OakOperations {
     public OakDocument getDocumentById(String documentId) {
         try {
             return oakFileRepository.readBinaryFile(documentId);
+        } catch (ItemNotFoundException ex) {
+            LOGGER.error("Document not found " + documentId);
+            return null;
         } catch (Exception ex) {
             throw new DocumentManagementException("Fetch document failed -" + documentId, ex);
         }
