@@ -12,6 +12,7 @@
         <module>guice-cxf</module>
         <module>guice-jackrabbit</module>
         <module>guice-jackrabbit-oak</module>
+        <module>aws-s3-bucket-impl</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

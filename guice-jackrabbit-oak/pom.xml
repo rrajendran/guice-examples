@@ -11,7 +11,7 @@
 
     <artifactId>guice-jackrabbit-oak</artifactId>
     <properties>
-        <jackrabbit-oak.version>1.6.1</jackrabbit-oak.version>
+        <jackrabbit-oak.version>1.7.0</jackrabbit-oak.version>
     </properties>
 
     <dependencyManagement>

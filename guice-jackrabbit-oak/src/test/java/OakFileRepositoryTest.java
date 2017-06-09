@@ -59,7 +59,7 @@ public class OakFileRepositoryTest {
         map.put("serviceDeliveryId", "10001");
         oakOperations.updateDocumentMetaData(map, identifier);
 
-        Map<String, String> properties = oakOperations.getProperty(identifier);
+        Map<String, String> properties = oakOperations.getDocumentMetadataById(identifier);
 
         assertThat(properties.get("jcr:serviceDeliveryId"), is("10001"));
     }

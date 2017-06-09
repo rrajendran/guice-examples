@@ -10,7 +10,6 @@ import javax.inject.Named;
 import javax.jcr.ItemNotFoundException;
 import javax.jcr.RepositoryException;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -61,8 +60,12 @@ public class OakOperationsImpl implements OakOperations {
     }
 
     @Override
-    public OakDocument getDocumentMetadataById(String documentId) {
-        return null;
+    public Map<String, String> getDocumentMetadataById(String documentId) {
+        try {
+            return oakFileRepository.getProperties(documentId);
+        } catch (RepositoryException e) {
+            throw new DocumentManagementException("Retrieve metadata failed:", e);
+        }
     }
 
     @Override
@@ -73,21 +76,5 @@ public class OakOperationsImpl implements OakOperations {
         } catch (Exception ex) {
             throw new DocumentManagementException("Retrieving metadata faile:", ex);
         }
-
-    }
-
-    @Override
-    public void setProperties(List<Map<String, String>> properties) {
-
-    }
-
-    @Override
-    public Map<String, String> getProperty(String documentId) {
-        try {
-            return oakFileRepository.getProperties(documentId);
-        } catch (RepositoryException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

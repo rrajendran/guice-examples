@@ -4,7 +4,6 @@ package com.capella.guice.services;
 import com.capella.guice.domain.OakDocument;
 
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,14 +19,9 @@ public interface OakOperations {
 
     void updateDocumentMetaData(Map<String, String> documentMetaData, String documentId);
 
-    OakDocument getDocumentMetadataById(String documentId);
+    Map<String, String> getDocumentMetadataById(String documentId);
 
 
     void deleteDocumentById(String documentId);
 
-
-    void setProperties(List<Map<String, String>> properties);
-
-
-    Map<String, String> getProperty(String documentId);
 }
