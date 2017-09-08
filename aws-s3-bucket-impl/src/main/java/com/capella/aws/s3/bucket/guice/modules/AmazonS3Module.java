@@ -1,8 +1,13 @@
 package com.capella.aws.s3.bucket.guice.modules;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.AnonymousAWSCredentials;
+import com.amazonaws.client.builder.AwsClientBuilder;
+import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.capella.aws.s3.bucket.services.AmazonS3Service;
 import com.capella.aws.s3.bucket.services.AmazonS3ServiceImpl;
@@ -29,11 +34,14 @@ public class AmazonS3Module extends AbstractModule {
 
 
     @Provides
-    public AmazonS3 getAmazonS3Client(@Named("aws.region") String region) {
+    public AmazonS3 getAmazonS3Client(@Named("aws.url") String url, @Named("aws.region") String region) {
+        EndpointConfiguration endpoint = new EndpointConfiguration(url, region);
+        return AmazonS3ClientBuilder
+                .standard()
+                .withPathStyleAccessEnabled(true)
+                .withEndpointConfiguration(endpoint)
+                .withCredentials(new AWSStaticCredentialsProvider(new AnonymousAWSCredentials()))
+                .build();
 
-        AmazonS3 amazonS3 = AmazonS3ClientBuilder.defaultClient();
-        Region usWest2 = Region.getRegion(Regions.valueOf(region));
-        amazonS3.setRegion(usWest2);
-        return amazonS3;
     }
 }

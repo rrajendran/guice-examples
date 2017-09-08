@@ -5,10 +5,10 @@ import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CopyObjectResult;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 
 import javax.inject.Inject;
-import java.io.InputStream;
 
 /**
  * @author Ramesh Rajendran
@@ -19,8 +19,11 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
     private AmazonS3 amazonS3;
 
     @Override
-    public void putObject(String bucketName, String key, InputStream input, ObjectMetadata metadata) throws AmazonServiceException {
-        amazonS3.putObject(bucketName, key, input, metadata);
+    public void putObject(PutObjectRequest putObjectRequest) throws AmazonServiceException {
+        if(!amazonS3.doesBucketExist(putObjectRequest.getBucketName())){
+            amazonS3.createBucket(putObjectRequest.getBucketName());
+        }
+        amazonS3.putObject( putObjectRequest);
     }
 
     @Override
@@ -35,6 +38,11 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 
     @Override
     public String copyObject(String sourceBucketName, String sourceKey, String destinationBucketName, String destinationKey) throws SdkClientException {
+
+        if(!amazonS3.doesBucketExist(destinationBucketName)){
+            amazonS3.createBucket(destinationBucketName);
+        }
+
         CopyObjectResult copyObjectResult = amazonS3.copyObject(sourceBucketName, sourceKey, destinationBucketName, destinationKey);
         return copyObjectResult.getETag();
     }
