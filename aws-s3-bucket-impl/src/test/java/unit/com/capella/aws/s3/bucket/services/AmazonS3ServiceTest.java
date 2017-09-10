@@ -45,6 +45,7 @@ public class AmazonS3ServiceTest extends S3MockServer{
         S3Object object = amazonS3Service.getObject("tempbucket", "tempkey");
         assertEquals(displayTextInputStream(object.getObjectContent()),"world");
     }
+
     @After
     public void tearDown(){
         amazonS3Service.deleteObject(BUCKET_NAME, KEY_NAME);

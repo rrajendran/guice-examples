@@ -2,9 +2,12 @@ package com.capella.aws.s3.bucket.services;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
+import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+
+import java.util.List;
 
 public interface AmazonS3Service {
 
@@ -51,4 +54,18 @@ public interface AmazonS3Service {
                       String destinationBucketName,
                       String destinationKey)
             throws SdkClientException;
+
+    /**
+     * Check bucket if exists.
+     * @param destinationBucketName Bucket name
+     * @param createIfNotFound Create if not found
+     * @return
+     */
+    Bucket checkBucket(String destinationBucketName, boolean createIfNotFound);
+
+    /**
+     * List buckets
+     * @return
+     */
+    List<Bucket> listBuckets();
 }

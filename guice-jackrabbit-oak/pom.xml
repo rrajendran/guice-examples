@@ -11,16 +11,43 @@
 
     <artifactId>guice-jackrabbit-oak</artifactId>
     <properties>
-        <jackrabbit-oak.version>1.7.0</jackrabbit-oak.version>
+        <jackrabbit-oak.version>1.7.6</jackrabbit-oak.version>
+        <metrics-core.version>3.2.4</metrics-core.version>
+        <s3mock.version>0.2.3</s3mock.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-core</artifactId>
+                <version>${metrics-core.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.jackrabbit</groupId>
                 <artifactId>oak-jcr</artifactId>
                 <version>${jackrabbit-oak.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.jackrabbit</groupId>
+                <artifactId>oak-data</artifactId>
+                <version>${jackrabbit-oak.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.jackrabbit</groupId>
+                <artifactId>oak-upgrade</artifactId>
+                <version>${jackrabbit-oak.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.jackrabbit</groupId>
+                <artifactId>oak-blob</artifactId>
+                <version>${jackrabbit-oak.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.jackrabbit</groupId>
                 <artifactId>oak-segment-tar</artifactId>
@@ -31,14 +58,31 @@
                 <artifactId>oak-blob-cloud</artifactId>
                 <version>${jackrabbit-oak.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>io.findify</groupId>
+                <artifactId>s3mock_2.12</artifactId>
+                <version>${s3mock.version}</version>
+                <scope>test</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>oak-jcr</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jackrabbit</groupId>
+            <artifactId>oak-blob</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jackrabbit</groupId>
+            <artifactId>oak-upgrade</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
@@ -51,6 +95,10 @@
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.findify</groupId>
+            <artifactId>s3mock_2.12</artifactId>
         </dependency>
     </dependencies>
 </project>

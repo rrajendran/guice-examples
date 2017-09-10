@@ -1,3 +1,5 @@
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.S3Object;
 import com.capella.guice.domain.OakDocument;
 import com.capella.guice.modules.ApplicationModule;
 import com.capella.guice.services.OakOperations;
@@ -5,6 +7,8 @@ import com.capella.guice.utils.StreamUtils;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.apache.commons.io.FileUtils;
+import org.apache.jackrabbit.oak.blob.cloud.aws.s3.S3DataStore;
+import org.apache.jackrabbit.oak.blob.cloud.s3.Utils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -15,6 +19,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
@@ -23,14 +28,16 @@ import static org.junit.Assert.assertThat;
  * @author Ramesh Rajendran
  */
 
-public class OakFileRepositoryTest {
+public class OakFileRepositoryTest extends S3MockServer {
     private static OakOperations oakOperations;
     private String identifier;
+    private AmazonS3Client s3Client;
 
-    @BeforeClass
-    public static void init() {
+    public OakFileRepositoryTest() {
         Injector injector = Guice.createInjector(new ApplicationModule());
         oakOperations = injector.getInstance(OakOperations.class);
+        Properties properties = injector.getInstance(Properties.class);
+        s3Client = Utils.openService(properties);
     }
 
     @Before
@@ -69,5 +76,7 @@ public class OakFileRepositoryTest {
         oakOperations.deleteDocumentById(identifier);
         OakDocument documentById = oakOperations.getDocumentById(identifier);
         assertThat(documentById, is(nullValue()));
+
+
     }
 }

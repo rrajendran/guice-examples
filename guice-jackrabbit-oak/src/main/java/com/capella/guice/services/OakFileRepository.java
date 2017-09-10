@@ -3,6 +3,8 @@ package com.capella.guice.services;
 import com.capella.guice.domain.OakContentStream;
 import com.capella.guice.domain.OakDocument;
 import com.capella.guice.exceptions.DocumentManagementException;
+import org.apache.jackrabbit.JcrConstants;
+import org.apache.jackrabbit.commons.JcrUtils;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -74,6 +76,7 @@ public class OakFileRepository {
 
         Binary binary = session.getValueFactory().createBinary(inputStream);
         content.setProperty(Property.JCR_DATA, binary);
+        session.save();
         return content.getIdentifier();
 
     }
@@ -107,7 +110,10 @@ public class OakFileRepository {
         Map<String, String> map = new HashMap<>();
         while (properties.hasNext()) {
             Property property = properties.nextProperty();
-            map.put(property.getName(), property.getString());
+            System.out.println(property.getName());
+            if(property.getName() != "jcr:content") {
+                map.put(property.getName(), property.getString());
+            }
         }
         return map;
     }
@@ -128,15 +134,9 @@ public class OakFileRepository {
     }
 
     public void removeNodeByIdentifier(String documentId) throws RepositoryException {
+        Node fileNode = session.getNodeByIdentifier(documentId);
+        fileNode.getParent().remove();
+        session.save();
 
-        Node nodeByIdentifier = session.getNodeByIdentifier(documentId);
-        if (nodeByIdentifier != null) {
-            NodeIterator nodes = nodeByIdentifier.getNodes();
-            while (nodes.hasNext()) {
-                Node node = nodes.nextNode();
-                node.remove();
-            }
-            nodeByIdentifier.remove();
-        }
     }
 }

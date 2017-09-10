@@ -3,12 +3,10 @@ package com.capella.aws.s3.bucket.services;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CopyObjectResult;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.*;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * @author Ramesh Rajendran
@@ -20,9 +18,7 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
 
     @Override
     public void putObject(PutObjectRequest putObjectRequest) throws AmazonServiceException {
-        if(!amazonS3.doesBucketExist(putObjectRequest.getBucketName())){
-            amazonS3.createBucket(putObjectRequest.getBucketName());
-        }
+        checkBucket(putObjectRequest.getBucketName(), true);
         amazonS3.putObject( putObjectRequest);
     }
 
@@ -39,11 +35,22 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
     @Override
     public String copyObject(String sourceBucketName, String sourceKey, String destinationBucketName, String destinationKey) throws SdkClientException {
 
-        if(!amazonS3.doesBucketExist(destinationBucketName)){
-            amazonS3.createBucket(destinationBucketName);
-        }
+        checkBucket(destinationBucketName, true);
 
         CopyObjectResult copyObjectResult = amazonS3.copyObject(sourceBucketName, sourceKey, destinationBucketName, destinationKey);
         return copyObjectResult.getETag();
+    }
+
+    @Override
+    public Bucket checkBucket(String destinationBucketName, boolean createIfNotFound) {
+        if(createIfNotFound && !amazonS3.doesBucketExist(destinationBucketName)){
+            return amazonS3.createBucket(destinationBucketName);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Bucket> listBuckets(){
+        return amazonS3.listBuckets();
     }
 }

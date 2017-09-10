@@ -1,5 +1,3 @@
-package unit.com.capella.aws.s3.bucket.services;
-
 import io.findify.s3mock.S3Mock;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

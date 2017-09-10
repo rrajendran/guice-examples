@@ -2,6 +2,7 @@ package com.capella.aws.s3.bucket.guice.modules;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.AnonymousAWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.regions.Region;
@@ -34,13 +35,14 @@ public class AmazonS3Module extends AbstractModule {
 
 
     @Provides
-    public AmazonS3 getAmazonS3Client(@Named("aws.url") String url, @Named("aws.region") String region) {
+    public AmazonS3 getAmazonS3Client(@Named("aws.url") String url, @Named("aws.region") String region,
+                                      @Named("aws.accessKey") String accessKey, @Named("aws.secretKey") String secretKey) {
         EndpointConfiguration endpoint = new EndpointConfiguration(url, region);
         return AmazonS3ClientBuilder
                 .standard()
                 .withPathStyleAccessEnabled(true)
                 .withEndpointConfiguration(endpoint)
-                .withCredentials(new AWSStaticCredentialsProvider(new AnonymousAWSCredentials()))
+                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey,secretKey)))
                 .build();
 
     }
