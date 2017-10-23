@@ -11,7 +11,7 @@
 
     <artifactId>guice-jackrabbit-oak</artifactId>
     <properties>
-        <jackrabbit-oak.version>1.7.6</jackrabbit-oak.version>
+        <jackrabbit-oak.version>1.7.9</jackrabbit-oak.version>
         <metrics-core.version>3.2.4</metrics-core.version>
         <s3mock.version>0.2.3</s3mock.version>
     </properties>

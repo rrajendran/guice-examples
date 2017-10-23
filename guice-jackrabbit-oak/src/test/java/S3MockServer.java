@@ -8,7 +8,7 @@ public class S3MockServer {
 
     @BeforeClass
     public static void S3MockServer(){
-        api = new S3Mock.Builder().withPort(7001).withInMemoryBackend().build();
+        api = new S3Mock.Builder().withPort(7071).withInMemoryBackend().build();
         api.start();
     }
 
