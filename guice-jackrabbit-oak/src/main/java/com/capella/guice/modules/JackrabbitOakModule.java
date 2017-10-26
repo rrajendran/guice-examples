@@ -1,16 +1,18 @@
 package com.capella.guice.modules;
 
-import com.capella.guice.services.*;
+import com.capella.guice.services.NodeRegistration;
+import com.capella.guice.services.NodeRegistrationImpl;
+import com.capella.guice.services.OakFileRepository;
+import com.capella.guice.services.OakOperations;
+import com.capella.guice.services.OakOperationsImpl;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.Provides;
-import org.apache.jackrabbit.oak.blob.cloud.aws.s3.SharedS3DataStore;
 import org.apache.jackrabbit.oak.blob.cloud.s3.S3DataStore;
 import org.apache.jackrabbit.oak.jcr.Jcr;
 import org.apache.jackrabbit.oak.plugins.blob.datastore.DataStoreBlobStore;
 import org.apache.jackrabbit.oak.plugins.document.DocumentMK;
 import org.apache.jackrabbit.oak.plugins.document.DocumentNodeStore;
-import org.apache.jackrabbit.oak.segment.SegmentNodeState;
 import org.apache.jackrabbit.oak.segment.SegmentNodeStore;
 import org.apache.jackrabbit.oak.segment.SegmentNodeStoreBuilders;
 import org.apache.jackrabbit.oak.segment.file.FileStore;
@@ -19,7 +21,11 @@ import org.apache.jackrabbit.oak.segment.file.InvalidFileStoreVersionException;
 import org.apache.jackrabbit.oak.spi.blob.BlobStore;
 
 import javax.inject.Named;
-import javax.jcr.*;
+import javax.jcr.Credentials;
+import javax.jcr.Repository;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
 import java.io.File;
 import java.io.IOException;
 
