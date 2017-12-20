@@ -21,6 +21,7 @@ import org.apache.jackrabbit.oak.segment.file.InvalidFileStoreVersionException;
 import org.apache.jackrabbit.oak.spi.blob.BlobStore;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 import javax.jcr.Credentials;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
@@ -42,6 +43,7 @@ public class JackrabbitOakModule implements Module {
     }
 
     @Provides
+    @Singleton
     public Session sessionFactory(DocumentNodeStore documentNodeStore, Credentials credentials) throws RepositoryException, IOException,
             InvalidFileStoreVersionException {
 
@@ -55,6 +57,7 @@ public class JackrabbitOakModule implements Module {
     }
 
     @Provides
+    @Singleton
     public DocumentNodeStore getDocumentNodeStore(S3DataStore s3DataStore) {
         BlobStore blobstore = new DataStoreBlobStore(s3DataStore);
         DocumentMK.Builder builder = new DocumentMK.Builder().setBlobStore(blobstore);
@@ -62,6 +65,7 @@ public class JackrabbitOakModule implements Module {
     }
 
     @Provides
+    @Singleton
     public S3DataStore getSharedS3DataStore() throws RepositoryException {
         S3DataStore s3DataStore = new S3DataStore();
         s3DataStore.setProperties(PropertiesProvider.getProperties());
@@ -72,12 +76,14 @@ public class JackrabbitOakModule implements Module {
     }
 
     @Provides
+    @Singleton
     public Credentials getCredentials(@Named("oak.username") String oakuser,
                                       @Named("oak.password") String oakPassword) {
         return new SimpleCredentials(oakuser, oakPassword.toCharArray());
     }
 
     @Provides
+    @Singleton
     public SegmentNodeStore getSegmentNodeStore(@Named("oak.repository.path") String repoPath) throws IOException, InvalidFileStoreVersionException {
         FileStore fs = FileStoreBuilder.fileStoreBuilder(new File(repoPath)).build();
         return SegmentNodeStoreBuilders.builder(fs).build();

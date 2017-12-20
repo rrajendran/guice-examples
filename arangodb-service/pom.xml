@@ -9,15 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>aws-s3-bucket-impl</artifactId>
+    <artifactId>arangodb-service</artifactId>
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-            <version>1.11.142</version>
-        </dependency>
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
@@ -38,11 +33,6 @@
             <artifactId>velocypack-module-scala</artifactId>
             <version>1.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>io.findify</groupId>
-            <artifactId>s3mock_2.12</artifactId>
-            <version>0.2.3</version>
-            <scope>test</scope>
-        </dependency>
+
     </dependencies>
 </project>

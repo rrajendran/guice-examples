@@ -8,6 +8,7 @@
     <artifactId>guice-examples</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
+        <module>arangodb-service</module>
         <module>guice-persistence</module>
         <module>guice-cxf</module>
         <module>guice-jackrabbit</module>

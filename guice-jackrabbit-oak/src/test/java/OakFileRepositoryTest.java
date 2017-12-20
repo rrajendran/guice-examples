@@ -39,6 +39,7 @@ public class OakFileRepositoryTest extends S3MockServer {
         oakOperations = injector.getInstance(OakOperations.class);
         Properties properties = injector.getInstance(Properties.class);
         s3Client = Utils.openService(properties);
+        s3Client.createBucket("jackrabbit");
     }
 
     @Before
