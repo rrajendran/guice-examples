@@ -1,5 +1,6 @@
 package unit.com.capella.arangodb.service;
 
+import com.arangodb.ArangoCursor;
 import com.arangodb.util.MapBuilder;
 import com.capella.arangodb.service.ArangodbService;
 import com.capella.arangodb.service.entity.S3Document;
@@ -7,11 +8,10 @@ import com.capella.arangodb.service.guice.modules.ArangodbModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Map;
-import java.util.UUID;
-import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -29,11 +29,10 @@ public class ArangodbServiceImplTest {
     ArangodbService arangodbService = injector.getInstance(ArangodbService.class);
     private static String DOCUMENT_KEY = null;
 
-    @Test
+    @Before
     public void saveDocument() throws Exception {
-        IntStream.range(1, 10000).forEach(i -> {
             S3Document s3document = new S3Document();
-            String documentId = UUID.randomUUID().toString();
+        String documentId = "001";
             s3document.setDocumentId(documentId);
             s3document.setDocumentName("test.txt");
             s3document.addProperty("name", "test");
@@ -41,9 +40,6 @@ public class ArangodbServiceImplTest {
             DOCUMENT_KEY = arangodbService.save(s3document);
 
             assertThat(DOCUMENT_KEY, is(documentId));
-        });
-
-
     }
 
     @Test
@@ -84,14 +80,18 @@ public class ArangodbServiceImplTest {
 
     @Test
     public void testQuery() {
-        String query = "FOR t IN documents FILTER t.name == @name RETURN t";
-        Map<String, Object> bindVars = new MapBuilder().put("name", "Homer").get();
+        String query = "FOR t IN documents FILTER t.key == @keyName RETURN t";
+        Map<String, Object> bindVars = new MapBuilder().put("keyName", DOCUMENT_KEY).get();
 
-        arangodbService.query(query, bindVars, null, S3Document.class);
+        ArangoCursor<S3Document> response = arangodbService.query(query, bindVars, null, S3Document.class);
+        while (response.hasNext()) {
+            S3Document s3Document = response.next();
+            assertThat(s3Document.getDocumentName(), is(DOCUMENT_KEY));
+        }
     }
 
     @After
     public void tearDown() {
-        //arangodbService.delete(DOCUMENT_KEY);
+        arangodbService.delete(DOCUMENT_KEY);
     }
 }
