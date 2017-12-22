@@ -61,7 +61,7 @@ public class ArangodbServiceImplTest {
         s3document.addProperty("name", "UpdateDocument");
         s3document.addProperty("format", "text");
 
-        String updateDocumentKey = arangodbService.updateDocument(DOCUMENT_KEY, s3document);
+        String updateDocumentKey = arangodbService.update(DOCUMENT_KEY, s3document);
         assertThat(updateDocumentKey, is(DOCUMENT_KEY));
 
         S3Document s3DocumentUpdated = arangodbService.get(DOCUMENT_KEY, S3Document.class);

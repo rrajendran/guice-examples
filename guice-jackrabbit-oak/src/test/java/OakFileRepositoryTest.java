@@ -7,6 +7,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.apache.commons.io.FileUtils;
 import org.apache.jackrabbit.oak.blob.cloud.s3.Utils;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,8 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -33,13 +33,13 @@ public class OakFileRepositoryTest extends S3MockServer {
     private static OakOperations oakOperations;
     private String identifier;
     private AmazonS3Client s3Client;
-
+    private Properties properties;
     public OakFileRepositoryTest() {
         Injector injector = Guice.createInjector(new ApplicationModule());
         oakOperations = injector.getInstance(OakOperations.class);
-        Properties properties = injector.getInstance(Properties.class);
+        properties = injector.getInstance(Properties.class);
         s3Client = Utils.openService(properties);
-        s3Client.createBucket("jackrabbit");
+
     }
 
     @Before
@@ -73,12 +73,12 @@ public class OakFileRepositoryTest extends S3MockServer {
         assertThat(properties.get("jcr:serviceDeliveryId"), is("10001"));
     }
 
-    /*@After
+    @After
     public void testDeleteDocumentById() {
         oakOperations.deleteDocumentById(identifier);
         OakDocument documentById = oakOperations.getDocumentById(identifier);
         assertThat(documentById, is(nullValue()));
 
 
-    }*/
+    }
 }
