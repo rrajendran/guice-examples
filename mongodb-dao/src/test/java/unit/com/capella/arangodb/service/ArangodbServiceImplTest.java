@@ -1,10 +1,9 @@
-package unit.com.capella.arangodb.service;
+package unit.com.capella.mongodb.service;
 
 import com.arangodb.ArangoCursor;
 import com.arangodb.util.MapBuilder;
-import com.capella.arangodb.service.ArangodbService;
-import com.capella.arangodb.service.entity.S3Document;
-import com.capella.arangodb.service.guice.modules.ArangodbModule;
+import com.capella.mongodb.service.ArangodbService;
+import com.capella.mongodb.service.entity.S3Document;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.After;
@@ -25,21 +24,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Ramesh Rajendran
  */
 public class ArangodbServiceImplTest {
-    Injector injector = Guice.createInjector(new ArangodbModule());
+    Injector injector = Guice.createInjector(new com.capella.mongodb.service.guice.modules.MongodbModule());
     ArangodbService arangodbService = injector.getInstance(ArangodbService.class);
     private static String DOCUMENT_KEY = null;
 
     @Before
     public void saveDocument() throws Exception {
-            S3Document s3document = new S3Document();
+        S3Document s3document = new S3Document();
         String documentId = "001";
-            s3document.setDocumentId(documentId);
-            s3document.setDocumentName("test.txt");
-            s3document.addProperty("name", "test");
-            s3document.addProperty("format", "text");
-            DOCUMENT_KEY = arangodbService.save(s3document);
+        s3document.setDocumentId(documentId);
+        s3document.setDocumentName("test.txt");
+        s3document.addProperty("name", "test");
+        s3document.addProperty("format", "text");
+        DOCUMENT_KEY = arangodbService.save(s3document);
 
-            assertThat(DOCUMENT_KEY, is(documentId));
+        assertThat(DOCUMENT_KEY, is(documentId));
     }
 
     @Test

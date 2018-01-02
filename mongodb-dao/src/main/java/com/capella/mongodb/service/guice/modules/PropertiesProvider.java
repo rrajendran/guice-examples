@@ -1,11 +1,11 @@
-package com.capella.arangodb.service.guice.modules;
+package com.capella.mongodb.service.guice.modules;
 
 import com.google.inject.Provider;
 
 import java.io.InputStream;
 import java.util.Properties;
 
-import static com.capella.arangodb.service.exceptions.Exceptions.uncheck;
+import static com.capella.mongodb.service.exceptions.Exceptions.uncheck;
 
 public class PropertiesProvider implements Provider<Properties> {
 

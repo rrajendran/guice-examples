@@ -12,6 +12,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.arangodb:arangodb-java-driver:4.3.0" level="project" />
+    <orderEntry type="library" name="Maven: com.arangodb:velocypack:1.0.13" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: com.arangodb:velocypack-module-jdk8:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.arangodb:velocypack-module-scala:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-s3:1.11.142" level="project" />
     <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-kms:1.11.142" level="project" />
     <orderEntry type="library" name="Maven: com.amazonaws:aws-java-sdk-core:1.11.142" level="project" />

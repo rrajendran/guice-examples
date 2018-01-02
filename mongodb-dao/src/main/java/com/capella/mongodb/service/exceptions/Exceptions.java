@@ -1,4 +1,4 @@
-package com.capella.arangodb.service.exceptions;
+package com.capella.mongodb.service.exceptions;
 
 import java.util.concurrent.Callable;
 

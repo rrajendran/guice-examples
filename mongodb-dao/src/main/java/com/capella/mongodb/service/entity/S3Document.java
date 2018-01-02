@@ -1,6 +1,4 @@
-package com.capella.arangodb.service.entity;
-
-import com.arangodb.entity.DocumentField;
+package com.capella.mongodb.service.entity;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -11,7 +9,6 @@ import java.util.Objects;
  * @author Ramesh Rajendran
  */
 public class S3Document implements Serializable {
-    @DocumentField(DocumentField.Type.KEY)
     private String documentId;
     private String documentName;
     private Map<String, String> properties;
