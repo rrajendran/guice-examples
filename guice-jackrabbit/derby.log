@@ -1,18 +1,18 @@
 ----------------------------------------------------------------
-2017-12-20 12:12:45.711 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance a816c00e-0160-73d7-1c9c-00000e103420
-on database directory C:\Users\RameshRajendran\stash\github\guice-examples\guice-jackrabbit\target\version\db  
+2018-01-02 23:36:15.727 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance a816c00e-0160-b93b-8bf8-000008ec5ed8
+on database directory /Users/ramesh.rajendran/stash/github/guice-examples/guice-jackrabbit/target/version/db  
 
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-2017-12-20 12:12:46.942 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 9a4840c2-0160-73d7-1c9c-00000e103420
-on database directory C:\Users\RameshRajendran\stash\github\guice-examples\guice-jackrabbit\target\workspaces\default\db  
+2018-01-02 23:36:16.515 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 9a4840c2-0160-b93b-8bf8-000008ec5ed8
+on database directory /Users/ramesh.rajendran/stash/github/guice-examples/guice-jackrabbit/target/workspaces/default/db  
 
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-2017-12-20 12:12:48.569 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 247b4177-0160-73d7-1c9c-00000e103420
-on database directory C:\Users\RameshRajendran\stash\github\guice-examples\guice-jackrabbit\target\workspaces\security\db  
+2018-01-02 23:36:17.395 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 247b4177-0160-b93b-8bf8-000008ec5ed8
+on database directory /Users/ramesh.rajendran/stash/github/guice-examples/guice-jackrabbit/target/workspaces/security/db  
 
 Database Class Loader started - derby.database.classpath=''

@@ -31,15 +31,15 @@ public class ArangodbServiceImplTest {
 
     @Before
     public void saveDocument() throws Exception {
-            S3Document s3document = new S3Document();
+        S3Document s3document = new S3Document();
         String documentId = "001";
-            s3document.setDocumentId(documentId);
-            s3document.setDocumentName("test.txt");
-            s3document.addProperty("name", "test");
-            s3document.addProperty("format", "text");
-            DOCUMENT_KEY = arangodbService.save(s3document);
+        s3document.setDocumentId(documentId);
+        s3document.setDocumentName("test.txt");
+        s3document.addProperty("name", "test");
+        s3document.addProperty("format", "text");
+        DOCUMENT_KEY = arangodbService.save(s3document);
 
-            assertThat(DOCUMENT_KEY, is(documentId));
+        assertThat(DOCUMENT_KEY, is(documentId));
     }
 
     @Test

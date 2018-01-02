@@ -1,6 +1,5 @@
 package com.capella.mongodb.service.guice.modules;
 
-import com.arangodb.ArangoDB;
 import com.arangodb.ArangoDatabase;
 import com.capella.mongodb.service.ArangodbService;
 import com.capella.mongodb.service.ArangodbServiceImpl;
@@ -42,7 +41,7 @@ public class MongodbModule extends AbstractModule {
 
 
     @Provides
-    public ArangoDatabase getDatabase(, ArangoDB arangoDB) {
+    public ArangoDatabase getDatabase(com.mongodb.Mongo arangoDB) {
         return arangoDB.db(databaseName);
     }
 }
