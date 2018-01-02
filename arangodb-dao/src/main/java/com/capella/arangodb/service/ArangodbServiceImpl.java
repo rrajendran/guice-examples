@@ -43,7 +43,7 @@ public class ArangodbServiceImpl implements ArangodbService {
     }
 
     @Override
-    public String update(String key, Object object) {
+    public String updateDocument(String key, Object object) {
         DocumentUpdateEntity<Object> objectDocumentUpdateEntity = arangoDatabase.collection(collectionName).updateDocument(key, object);
         return objectDocumentUpdateEntity.getKey();
     }
