@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Ramesh Rajendran
  */
-public class AmazonS3ServiceImpl implements AmazonS3Service {
+public class AwsS3ServiceImpl implements AwsS3Service {
 
     @Inject
     private AmazonS3 amazonS3;

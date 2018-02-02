@@ -9,7 +9,7 @@ import com.amazonaws.services.s3.model.S3Object;
 
 import java.util.List;
 
-public interface AmazonS3Service {
+public interface AwsS3Service {
 
     /**
      * Put object in s3 bucket

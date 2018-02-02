@@ -1,17 +1,14 @@
 package com.capella.aws.s3.bucket.guice.modules;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.AnonymousAWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.capella.aws.s3.bucket.services.AmazonS3Service;
-import com.capella.aws.s3.bucket.services.AmazonS3ServiceImpl;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
+import com.capella.aws.s3.bucket.services.AwsS3Service;
+import com.capella.aws.s3.bucket.services.AwsS3ServiceImpl;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -24,11 +21,11 @@ import static com.google.inject.name.Names.bindProperties;
 /**
  * @author Ramesh Rajendran
  */
-public class AmazonS3Module extends AbstractModule {
+public class AwsModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(AmazonS3Service.class).to(AmazonS3ServiceImpl.class);
+        bind(AwsS3Service.class).to(AwsS3ServiceImpl.class);
         binder().bind(Properties.class).toProvider(PropertiesProvider.class).in(Singleton.class);
         bindProperties(binder(), PropertiesProvider.getProperties());
     }
@@ -42,6 +39,18 @@ public class AmazonS3Module extends AbstractModule {
                 .standard()
                 .withPathStyleAccessEnabled(true)
                 .withEndpointConfiguration(endpoint)
+                .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey,secretKey)))
+                .build();
+
+    }
+
+
+    @Provides
+    public AmazonSQS getAmazonSQSClient(@Named("aws.region") String region,
+                                        @Named("aws.accessKey") String accessKey, @Named("aws.secretKey") String secretKey) {
+        return AmazonSQSClientBuilder
+                .standard()
+                .withRegion(region)
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey,secretKey)))
                 .build();
 
