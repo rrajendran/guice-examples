@@ -1,11 +1,14 @@
 package com.capella.mongodb.service;
 
+import com.capella.mongodb.service.entity.S3Document;
+import org.bson.Document;
+
 /**
  * @author Ramesh Rajendran
  */
-public interface ArangodbService {
+public interface MongoDBService {
 
-    String save(Object object);
+    void save(S3Document object);
 
     <T> T get(String key, Class<T> T);
 
@@ -14,4 +17,5 @@ public interface ArangodbService {
     String updateDocument(String documentId, Object object);
 
     <T> T query(String query, Class<T> type);
+
 }

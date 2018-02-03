@@ -14,7 +14,7 @@ public class PropertiesProvider implements Provider<Properties> {
     static {
         InputStream inputStream = PropertiesProvider.class
                 .getClassLoader()
-                .getResourceAsStream("arangodb-service.properties");
+                .getResourceAsStream("mongodb-service.properties");
 
         uncheck(() -> {
             properties.load(inputStream);

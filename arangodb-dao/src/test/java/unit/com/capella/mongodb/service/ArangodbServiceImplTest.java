@@ -2,8 +2,9 @@ package unit.com.capella.mongodb.service;
 
 import com.arangodb.ArangoCursor;
 import com.arangodb.util.MapBuilder;
-import com.capella.mongodb.service.ArangodbService;
-import com.capella.mongodb.service.entity.S3Document;
+import com.capella.arangodb.service.ArangodbService;
+import com.capella.arangodb.service.entity.S3Document;
+import com.capella.arangodb.service.guice.modules.ArangodbModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.junit.After;
@@ -24,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Ramesh Rajendran
  */
 public class ArangodbServiceImplTest {
-    Injector injector = Guice.createInjector(new com.capella.mongodb.service.guice.modules.MongodbModule());
+    Injector injector = Guice.createInjector(new ArangodbModule());
     ArangodbService arangodbService = injector.getInstance(ArangodbService.class);
     private static String DOCUMENT_KEY = null;
 
@@ -60,7 +61,7 @@ public class ArangodbServiceImplTest {
         s3document.addProperty("name", "UpdateDocument");
         s3document.addProperty("format", "text");
 
-        String updateDocumentKey = arangodbService.update(DOCUMENT_KEY, s3document);
+        String updateDocumentKey = arangodbService.updateDocument(DOCUMENT_KEY, s3document);
         assertThat(updateDocumentKey, is(DOCUMENT_KEY));
 
         S3Document s3DocumentUpdated = arangodbService.get(DOCUMENT_KEY, S3Document.class);

@@ -23,5 +23,10 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>3.6.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
