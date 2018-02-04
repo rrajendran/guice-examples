@@ -4,7 +4,6 @@ import com.capella.mongodb.service.MongoDBService;
 import com.capella.mongodb.service.entity.S3Document;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import java.util.UUID;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
@@ -34,6 +32,7 @@ public class MongoDBServiceImplTest {
         s3document.setDocumentName("test.txt");
         s3document.addProperty("name", "test");
         s3document.addProperty("format", "text");
+        DOCUMENT_KEY = s3document.getDocumentId();
         mongoDBService.save(s3document);
     }
 
