@@ -1,4 +1,4 @@
-package com.capella.mongodb.service.exceptions;
+package com.capella.consult.service.exceptions;
 
 import java.util.concurrent.Callable;
 

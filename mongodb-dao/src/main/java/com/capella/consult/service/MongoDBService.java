@@ -1,7 +1,6 @@
-package com.capella.mongodb.service;
+package com.capella.consult.service;
 
-import com.capella.mongodb.service.entity.S3Document;
-import org.bson.Document;
+import com.capella.consult.service.entity.S3Document;
 
 /**
  * @author Ramesh Rajendran

@@ -1,14 +1,13 @@
-package com.capella.mongodb.service.entity;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package com.capella.consult.service.entity;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Ramesh Rajendran
@@ -18,7 +17,6 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 public class S3Document implements Serializable{
-    @JsonProperty("_id")
     private String documentId;
     private String documentName;
     private Map<String, String> properties;

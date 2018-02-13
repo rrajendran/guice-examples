@@ -1,14 +1,16 @@
 package unit.com.capella.mongodb.service;
 
-import com.capella.mongodb.service.MongoDBService;
-import com.capella.mongodb.service.entity.S3Document;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import java.util.UUID;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
+import com.capella.consult.service.MongoDBService;
+import com.capella.consult.service.entity.S3Document;
+import com.capella.consult.service.guice.modules.MongodbModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,7 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author Ramesh Rajendran
  */
 public class MongoDBServiceImplTest {
-    Injector injector = Guice.createInjector(new com.capella.mongodb.service.guice.modules.MongodbModule());
+    Injector injector = Guice.createInjector(new MongodbModule());
     MongoDBService mongoDBService = injector.getInstance(MongoDBService.class);
     private static String DOCUMENT_KEY = null;
 
@@ -32,7 +34,6 @@ public class MongoDBServiceImplTest {
         s3document.setDocumentName("test.txt");
         s3document.addProperty("name", "test");
         s3document.addProperty("format", "text");
-        DOCUMENT_KEY = s3document.getDocumentId();
         mongoDBService.save(s3document);
     }
 

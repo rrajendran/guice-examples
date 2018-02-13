@@ -1,11 +1,11 @@
-package com.capella.mongodb.service.guice.modules;
-
-import com.google.inject.Provider;
+package com.capella.consult.service.guice.modules;
 
 import java.io.InputStream;
 import java.util.Properties;
 
-import static com.capella.mongodb.service.exceptions.Exceptions.uncheck;
+import com.google.inject.Provider;
+
+import static com.capella.consult.service.exceptions.Exceptions.uncheck;
 
 public class PropertiesProvider implements Provider<Properties> {
 
