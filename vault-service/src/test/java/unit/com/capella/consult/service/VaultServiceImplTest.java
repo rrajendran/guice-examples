@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,13 +30,10 @@ public class VaultServiceImplTest {
     private String path = "/secret/hello1";
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException, VaultException {
         Injector injector = Guice.createInjector(new VaultModule());
         vaultService = injector.getInstance(VaultService.class);
-    }
 
-    @Before
-    public void init() throws VaultException, IOException {
         Map<String, Object> secrets = new HashMap<>();
         secrets.put("user", "ramesh");
         secrets.put("pass", "passwd");
@@ -47,6 +45,11 @@ public class VaultServiceImplTest {
     public void readSecrets() throws VaultException, IOException {
         VaultResponse user = vaultService.read(path, "user");
         assertThat(user.getData().get("user"), CoreMatchers.is("ramesh"));
+    }
+
+    @After
+    public void tearDown() throws IOException, VaultException {
+        vaultService.delete(path);
     }
 
 }

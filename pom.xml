@@ -15,8 +15,8 @@
         <module>guice-jackrabbit</module>
         <module>guice-jackrabbit-oak</module>
         <module>aws-s3-bucket-impl</module>
-        <module>consul-com.capella.vault.service</module>
-        <module>vault-com.capella.vault.service</module>
+        <module>consul-service</module>
+        <module>vault-service</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

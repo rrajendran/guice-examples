@@ -28,4 +28,12 @@ public interface VaultService {
      * @throws VaultException
      */
     VaultResponse read(String path, String key) throws VaultException, IOException;
+
+    /**
+     * Delete secret
+     * @param path
+     * @throws VaultException
+     * @throws IOException
+     */
+    void delete(String path) throws VaultException, IOException;
 }

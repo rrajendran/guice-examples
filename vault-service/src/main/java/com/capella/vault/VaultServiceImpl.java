@@ -30,4 +30,16 @@ public class VaultServiceImpl implements VaultService {
     public VaultResponse read(String path, String key) throws VaultException, IOException {
         return vaultClient.get(path, key);//vault.logical().read(path).getData().get(key);
     }
+
+    /**
+     * Delete secret
+     *
+     * @param path
+     * @throws VaultException
+     * @throws IOException
+     */
+    @Override
+    public void delete(String path) throws VaultException, IOException {
+        vaultClient.delete(path);
+    }
 }

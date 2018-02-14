@@ -1,4 +1,4 @@
-package unit.com.capella.mongodb.service;
+package unit.com.capella.arangodb.service;
 
 import com.arangodb.ArangoCursor;
 import com.arangodb.util.MapBuilder;
